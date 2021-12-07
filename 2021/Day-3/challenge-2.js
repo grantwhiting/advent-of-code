@@ -35,6 +35,10 @@ function getValue(array, filterBy, idx = 0) {
     filteredArray = array.filter((x) => parseInt(x[idx], 10) === filter[idx]);
   }
 
+  if (!filteredArray.length) {
+    filteredArray = array;
+  }
+
   if (filteredArray.length === 1) {
     return parseInt(filteredArray[0], 2);
   }
@@ -42,4 +46,4 @@ function getValue(array, filterBy, idx = 0) {
   return getValue(filteredArray, filterBy, idx + 1);
 }
 
-console.log(getValue(data, 1), getValue(data, 0));
+console.log(getValue(data, 1) * getValue(data, 0));
