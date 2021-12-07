@@ -8,13 +8,12 @@ let breakLoop = false;
 let lastNumber;
 
 data.forEach((capture, i) => {
-  let boardKey = `board${i}`;
   if (i === 0) {
     numbers = capture.split(",");
   } else {
     boards = {
       ...boards,
-      [boardKey]: capture
+      [`board${i}`]: capture
         .split("\n")
         .map((x) => x.trim().split(" ").filter(String)),
     };
