@@ -25,7 +25,7 @@ const winner = (card) => {
   // get card columns
   const columns = card[0].map((_, i) => card.map((x) => x[i]));
   // check card columns or rows for all cells containing "MARKED"
-  const cardWins = [...card, ...columns].some((x) =>
+  const cardWins = [...card, ...columns].find((x) =>
     x.every((cell) => cell === "MARKED")
   );
 
