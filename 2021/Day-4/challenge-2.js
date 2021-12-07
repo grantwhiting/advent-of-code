@@ -37,8 +37,7 @@ const boardIsAWinner = (board) => {
       winningBoards.add(board);
 
       if (winningBoards.size === Object.keys(boards).length) {
-        break numbersLoop;
-        break boardsLoop;
+        breakLoop = true;
         break;
       }
     }
@@ -56,15 +55,17 @@ const markBoard = (board, number) => {
   });
 };
 
-numbersLoop:
 for (number of numbers) {
-  boardsLoop:
   for (let board in boards) {
     boards[board].forEach((row) => {
       markBoard(boards[board], number);
 
       boardIsAWinner(boards[board]);
     });
+
+    if (breakLoop) {
+      break;
+    }
   }
 
   if (breakLoop) {
