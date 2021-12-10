@@ -10,7 +10,7 @@ fish.forEach((f) => {
   queue[f]++;
 });
 
-for (let i = 0; i < 80; i++) {
+for (let i = 0; i < 256; i++) {
   // remove first item from queue
   const currentFish = queue.shift();
   // re-add first item to end of queue
