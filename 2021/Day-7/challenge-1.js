@@ -11,9 +11,8 @@ crabPos.forEach((_, i) => {
 // loop through crab positions and subtract the board position from each crab position
 crabPos.forEach((p1, i) => {
   crabPos.forEach((p2) => {
-    const difference = Math.abs(p1 - p2);
-
-    positionArrays[i].push((difference * (difference + 1)) / 2);
+    const fuelUsed = p1 - p2;
+    positionArrays[i].push(Math.abs(fuelUsed));
   });
 });
 
