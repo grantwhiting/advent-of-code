@@ -12,6 +12,7 @@ const charGroups = fs.readFileSync("./data.txt", "utf8").split(/\n/);
 //    3. if the top of the stack does match your bracket pop it off the stack and keep going
 
 const invalidChars = [];
+const invalidChunkIndices = [];
 
 function getMatchingChar(closingChar) {
   switch (closingChar) {
@@ -39,9 +40,9 @@ function replaceCharWithValue(char) {
   }
 }
 
-for (const chars of charGroups) {
+for (let i = 0; i < charGroups.length; i++) {
   const stack = [];
-  for (const char of [...chars]) {
+  for (const char of [...charGroups[i]]) {
     if (["[", "(", "{", "<"].includes(char)) {
       stack.push(char);
     } else if (["]", ")", "}", ">"].includes(char)) {
@@ -50,6 +51,7 @@ for (const chars of charGroups) {
         break;
       } else if (lastChar !== getMatchingChar(char)) {
         invalidChars.push(char);
+        invalidChunkIndices.push(i);
         break;
       }
     }
@@ -57,3 +59,5 @@ for (const chars of charGroups) {
 }
 
 console.log(invalidChars.map(replaceCharWithValue).reduce((a, b) => a + b));
+
+module.exports = invalidChunkIndices;
