@@ -2,14 +2,6 @@ const fs = require("fs");
 let charGroups = fs.readFileSync("./data.txt", "utf-8").split(/\n/);
 const invalidChunkIndices = require("./challenge-1");
 
-// for only the incomplete chunks
-// for each character in the input
-// 1. if it's an open bracket add it to the stack
-// 2. if it's a close bracket check the top of the stack
-//    1. if the stack is empty it's invalid - break
-//    2. if the top of the stack does not match the bracket add the corresponding close bracket to a closeChars array
-//    3. if the top of the stack does match the bracket pop it off the stack and keep going
-
 const closeCharGroups = [];
 
 // remove invalid chunks
