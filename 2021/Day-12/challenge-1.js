@@ -32,7 +32,7 @@ class CaveSystem {
     this.adjMap.set(s, [...e]);
   }
 
-  callDPS(cave, end) {
+  callDFS(cave, end) {
     this.depthFirstSearch(cave, end, this.visited);
   }
 
@@ -61,5 +61,5 @@ for (const key in graph) {
   cs.addEdge(key, graph[key]);
 }
 
-cs.callDPS("start", "end");
+cs.callDFS("start", "end");
 console.log(cs.paths.length);
