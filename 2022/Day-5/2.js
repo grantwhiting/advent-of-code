@@ -26,7 +26,7 @@ instructions.forEach((ins, idx) => {
 });
 
 stacks.forEach((s) => {
-  messageArr.push(s[s.length - 1]);
+  messageArr.push(s.pop());
 });
 
 console.log(messageArr.join(""));
