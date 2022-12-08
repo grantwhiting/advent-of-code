@@ -57,10 +57,10 @@ data.forEach((d, i) => {
 
 const markForDeletion = [];
 
-function eachRecursive(obj) {
+function checkEachObj(obj) {
   for (var k in obj) {
     if (typeof obj[k] == "object" && obj[k] !== null && k !== "parentDir") {
-      eachRecursive(obj[k]);
+      checkEachObj(obj[k]);
     } else {
       if (k !== "parentDir" && k !== "dirSize") {
         obj.dirSize += obj[k];
@@ -77,6 +77,5 @@ function eachRecursive(obj) {
   }
 }
 
-eachRecursive(struct);
-// console.log(struct);
+checkEachObj(struct);
 console.log(markForDeletion.reduce((a, b) => a + b));
