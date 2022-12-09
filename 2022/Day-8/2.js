@@ -56,8 +56,9 @@ treeMatrix.forEach((row, i) => {
       }
     }
 
-    const arr = [topCount, rightCount, bottomCount, leftCount];
-    t.score = arr.reduce((a, b) => a * b);
+    t.score = [topCount, rightCount, bottomCount, leftCount].reduce(
+      (a, b) => a * b
+    );
   });
 });
 

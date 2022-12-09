@@ -5,14 +5,12 @@ const treeMatrix = fs
   .map((x) =>
     x.split("").map((x) => ({
       height: Number(x),
-      isVisible: false,
-      isEdge: false,
+      isVisible: false
     }))
   );
 
 treeMatrix.forEach((col, i) => {
   col.forEach((t, j) => {
-    // check if tree is visible
     const precedingRowItems = treeMatrix[i].slice(0, j);
     const trailingRowItems = treeMatrix[i].slice(j + 1);
     const precedingColItems = treeMatrix.map((x) => x[j]).slice(0, i);
