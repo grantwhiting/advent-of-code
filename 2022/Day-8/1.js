@@ -10,30 +10,9 @@ const treeMatrix = fs
     }))
   );
 
-const visibleTrees = [];
-
 treeMatrix.forEach((col, i) => {
   col.forEach((t, j) => {
-    let up, right, down, left;
-
-    if (treeMatrix[j - 1] !== undefined) up = treeMatrix[j - 1][i];
-    right = treeMatrix[j][i + 1];
-    if (treeMatrix[j + 1] !== undefined) down = treeMatrix[j + 1][i];
-    left = treeMatrix[j][i - 1];
-
-    // get edges
-    if (
-      up === undefined ||
-      right === undefined ||
-      down === undefined ||
-      left === undefined
-    ) {
-      visibleTrees.push(t.height);
-      t.isVisible = true;
-      t.isEdge = true;
-    }
-
-    // check if t is visible
+    // check if tree is visible
     const precedingRowItems = treeMatrix[i].slice(0, j);
     const trailingRowItems = treeMatrix[i].slice(j + 1);
     const precedingColItems = treeMatrix.map((x) => x[j]).slice(0, i);
@@ -49,11 +28,10 @@ treeMatrix.forEach((col, i) => {
       t.height > Math.max(...trailingColItems.map((x) => x.height));
 
     if (
-      !t.isEdge &&
-      (tallestFromLeftEdge ||
-        tallestFromRightEdge ||
-        tallestFromTopEdge ||
-        tallestFromBottomEdge)
+      tallestFromLeftEdge ||
+      tallestFromRightEdge ||
+      tallestFromTopEdge ||
+      tallestFromBottomEdge
     ) {
       t.isVisible = true;
     }
