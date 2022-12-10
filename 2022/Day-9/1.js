@@ -9,7 +9,7 @@ const dirs = {
 };
 
 const tPositions = new Set();
-let T = [0, 0];
+const T = [0, 0];
 const H = [0, 0];
 
 moves.forEach((move, i) => {
