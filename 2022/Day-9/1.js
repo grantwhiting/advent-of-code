@@ -16,7 +16,7 @@ moves.forEach((move, i) => {
   let [direction, steps] = move.split(" ");
   steps = Number(steps);
 
-  for (const s of [...Array(steps)]) {
+  for (const _ of [...Array(steps)]) {
     const dir = dirs[direction];
     const previousHX = H[0];
     const previousHY = H[1];
