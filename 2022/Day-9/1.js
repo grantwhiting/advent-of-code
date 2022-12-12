@@ -23,10 +23,10 @@ moves.forEach((move, i) => {
     H[0] += dir[0];
     H[1] += dir[1];
 
-    const rise = Math.abs(H[1] - T[1]);
-    const run = Math.abs(H[0] - T[0]);
+    const rise = H[1] - T[1];
+    const run = H[0] - T[0];
 
-    if (i === 0 || rise === 2 || run === 2) {
+    if (i === 0 || Math.abs(rise) === 2 || Math.abs(run) === 2) {
       T[0] = previousHX;
       T[1] = previousHY;
 
