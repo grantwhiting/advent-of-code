@@ -32,11 +32,11 @@ moves.forEach((move) => {
       const run = knots[j - 1][0] - knots[j][0];
       const rise = knots[j - 1][1] - knots[j][1];
 
-      if (Math.abs(run) >= 2) {
+      if (Math.abs(run) === 2) {
         addPoint = true;
         knots[j][0] += Math.sign(run);
         if (Math.abs(rise) !== 0) knots[j][1] += Math.sign(rise);
-      } else if (Math.abs(rise) >= 2) {
+      } else if (Math.abs(rise) === 2) {
         addPoint = true;
         knots[j][1] += Math.sign(rise);
         if (Math.abs(run) !== 0) knots[j][0] += Math.sign(run);
