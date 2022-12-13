@@ -9,15 +9,15 @@ instructions.forEach((ins) => {
   cycle++;
 
   if (ins === "noop") {
-    if (cycle % 20 === 0 && cycle % 40 !== 0) signals.push(cycle * X);
+    if (cycle % 40 === 20) signals.push(cycle * X);
     return;
   }
 
-  if (cycle % 20 === 0 && cycle % 40 !== 0) signals.push(cycle * X);
+  if (cycle % 40 === 20) signals.push(cycle * X);
 
   cycle++;
 
-  if (cycle % 20 === 0 && cycle % 40 !== 0) signals.push(cycle * X);
+  if (cycle % 40 === 20) signals.push(cycle * X);
 
   X += Number(ins.split(" ")[1]);
 });
