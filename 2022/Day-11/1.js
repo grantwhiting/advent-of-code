@@ -13,7 +13,7 @@ function performOperation(str) {
   }
 }
 const monos = fs
-  .readFileSync("./sample.txt", "utf-8")
+  .readFileSync("./data.txt", "utf-8")
   .split("\n\n")
   .map((m) => m.split("\n"))
   .map((m) => ({
@@ -23,12 +23,12 @@ const monos = fs
     inspect: function () {
       const lastItem = m[2].split(" ")[m[2].split(" ").length - 1];
       const squared = lastItem.match("old") !== null;
-      this.items = this.items.map((it) => {
+      this.items = this.items.map((item) => {
         this.inspectedCount++;
         return Math.floor(
           performOperation(m[2])(
-            it,
-            squared ? it : Number(m[2].match(matcher)[0])
+            item,
+            squared ? item : Number(m[2].match(matcher)[0])
           ) / 3
         );
       });
