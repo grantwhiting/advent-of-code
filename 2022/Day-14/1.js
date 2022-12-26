@@ -70,7 +70,7 @@ rockPaths.forEach((rp) => {
 function fallingSand(x, y) {
   let fall = true;
   while (fall) {
-    if (graph[y + 1] === undefined) {
+    if (graph[y + 1] === undefined || graph[y + 1][x + 1] === undefined) {
       fall = false;
     } else {
       if (graph[y + 1][x] === ".") {
