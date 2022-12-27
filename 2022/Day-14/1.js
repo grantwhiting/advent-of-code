@@ -94,5 +94,4 @@ function fallingSand(x, y) {
 }
 
 fallingSand(500, 0);
-console.log(graph.map((row) => row.slice(leftBound).join("")).join("\n"));
 console.log(restfulSand);
