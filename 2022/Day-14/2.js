@@ -75,31 +75,27 @@ rockPaths.forEach((rp) => {
 
 function fallingSand(x, y) {
   let fall = true;
-  while (fall) {
-    if (
-      graph[y + 1] === undefined ||
-      graph[y + 1][x + 1] === undefined ||
-      graph[0][500] === "o"
-    ) {
-      fall = false;
-    } else {
-      if (graph[y + 1][x] === ".") {
-        y++;
-        continue;
-      } else if (graph[y + 1][x - 1] === ".") {
-        y++;
-        x--;
-        continue;
-      } else if (graph[y + 1][x + 1] === ".") {
-        y++;
-        x++;
-        continue;
-      }
-      restfulSand++;
-      graph[y][x] = "o";
-      x = 500;
-      y = 0;
+  while (
+    graph[y + 1] !== undefined &&
+    graph[y + 1][x + 1] !== undefined &&
+    graph[0][500] !== "o"
+  ) {
+    if (graph[y + 1][x] === ".") {
+      y++;
+      continue;
+    } else if (graph[y + 1][x - 1] === ".") {
+      y++;
+      x--;
+      continue;
+    } else if (graph[y + 1][x + 1] === ".") {
+      y++;
+      x++;
+      continue;
     }
+    restfulSand++;
+    graph[y][x] = "o";
+    x = 500;
+    y = 0;
   }
 }
 
