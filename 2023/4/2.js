@@ -1,6 +1,10 @@
 const fs = require("fs");
 const scoreCards = fs.readFileSync("./data.txt", "utf-8").split(/\n/);
 
+const cardCounts = scoreCards.reduce((obj, curr, i) => {
+  return (obj = { ...obj, ...{ [i + 1]: 0 } });
+}, {});
+
 const getNumbers = (str, regex) => {
   const match = str.match(regex);
   if (match) {
@@ -16,7 +20,7 @@ const parsedScoreCardData = scoreCards.map((sc) => ({
   myNumbers: getNumbers(sc, new RegExp(/\| (\d*(?:\s\d*)*)/)),
 }));
 
-const totalNumbersInBothLists = parsedScoreCardData.map((d) => {
+const totalWinningNumbers = parsedScoreCardData.map((d) => {
   const numbersInBothLists = [];
   d.winningNumbers.forEach((wn) => {
     if (d.myNumbers.includes(wn)) {
@@ -26,22 +30,19 @@ const totalNumbersInBothLists = parsedScoreCardData.map((d) => {
   return numbersInBothLists;
 });
 
-const totalScores = totalNumbersInBothLists.map((t) => {
-  return t.reduce((acc, curr, i) => {
-    if (t.length === 0) {
-      return 0;
-    }
+const getCardCopyCount = (card, cardIndex) => {
+  cardIndex++;
+  // add to count of current card
+  cardCounts[cardIndex] += 1;
+  const currentCell = cardCounts[cardIndex];
 
-    if (t.length === 1) {
-      return 1;
-    }
+  // get card copies
+  card.forEach((number) => {
+    cardIndex++;
+    cardCounts[cardIndex] += currentCell;
+  });
+};
 
-    if (i === 0) {
-      return 1;
-    }
+totalWinningNumbers.forEach(getCardCopyCount);
 
-    return acc * 2;
-  }, 0);
-});
-
-console.log(totalScores.reduce((total, score) => total + score));
+console.log(Object.values(cardCounts).reduce((curr, next) => curr + next, 0));
