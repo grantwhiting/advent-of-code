@@ -87,14 +87,14 @@ allNumbers.forEach((n) => {
   });
 });
 
-const gearRatios = [];
+const gearRatios = new Set();
 allNumbers.forEach((currNum) => {
   allNumbers.forEach((numToCheck) => {
     if (
       currNum.adjacentStarCoordinates === numToCheck.adjacentStarCoordinates &&
       currNum.id !== numToCheck.id
     ) {
-      gearRatios.push([Number(currNum.number) * Number(numToCheck.number)]);
+      gearRatios.add(Number(currNum.number) * Number(numToCheck.number));
     }
   });
 });
@@ -106,4 +106,6 @@ for (var i = 0; i < gearRatios.length; i++) {
   }
 }
 
-console.log(uniqueGearRatios.reduce((acc, curr) => Number(acc) + Number(curr)));
+console.log(
+  Array.from(gearRatios).reduce((acc, curr) => Number(acc) + Number(curr))
+);
