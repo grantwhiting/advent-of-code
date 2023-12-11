@@ -99,13 +99,6 @@ allNumbers.forEach((currNum) => {
   });
 });
 
-const uniqueGearRatios = [];
-for (var i = 0; i < gearRatios.length; i++) {
-  if (i % 2 !== 0) {
-    uniqueGearRatios.push(gearRatios[i]);
-  }
-}
-
 console.log(
   Array.from(gearRatios).reduce((acc, curr) => Number(acc) + Number(curr))
 );
