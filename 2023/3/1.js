@@ -9,8 +9,6 @@ const isSymbol = (str) =>
   str !== undefined ? (str.match(/[^0-9.]+/g) ? true : false) : false;
 const isNumber = (str) =>
   str !== undefined ? (str.match(/\d+/g) ? true : false) : null;
-const isPeriod = (str) =>
-  str !== undefined ? (str.match(/./g) ? true : false) : null;
 const getAdjacentCells = (x, y) => {
   return {
     left: schematic[y][x - 1],
