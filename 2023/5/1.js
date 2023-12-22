@@ -1,10 +1,10 @@
 const fs = require("fs");
 const almanac = fs
-  .readFileSync("./sample.txt", "utf-8")
+  .readFileSync("./data.txt", "utf-8")
   .split(/\n\s*\n/)
   .slice(1);
 const seeds = fs
-  .readFileSync("./sample.txt", "utf-8")
+  .readFileSync("./data.txt", "utf-8")
   .split(/\n/)[0]
   .split(" ")
   .filter((s) => s.match(/\d/))
@@ -40,16 +40,50 @@ Object.entries(almanacGroups).forEach(([key, value], i) => {
   });
 });
 
+const rangeResults = seeds.reduce((acc, curr) => {
+  return { ...acc, ...{ [curr]: [] } };
+}, {});
+
+seeds.forEach((s, i) => {
+  const almanacGroupsCopy = { ...almanacGroups };
+  Object.entries(almanacGroupsCopy).forEach(([key, value]) => {
+    const maps = Object.keys(value)
+      .filter((key) => /^map/.test(key))
+      .map((x) => value[x]);
+
+    delete almanacGroupsCopy[key];
+
+    let result;
+
+    if (rangeResults[s].length) {
+      result = rangeResults[s][rangeResults[s].length - 1];
+    }
+
+    for (let y = 0; y < maps.length; y++) {
+      const shouldContinue = getValueFromMap(maps[y], result || s, s);
+      if (shouldContinue) {
+        continue;
+      }
+      break;
+    }
+  });
+});
+
 function createList(startingNumber, n) {
   return Array(n)
     .fill()
     .map((_, index) => startingNumber + index);
 }
 
-const locationNumbers = [];
-seeds.forEach((s) => {
-  Object.values(almanacGroups).forEach((ag, i) => {});
-});
+function getValueFromMap(map, number, seed) {
+  if (map.get(number)) {
+    rangeResults[seed].push(map.get(number));
+    return false;
+  }
 
-console.dir(seeds);
-console.dir(almanacGroups, { depth: null });
+  return true;
+}
+
+const locationNumbers = Object.values(rangeResults).map((x) => x.pop());
+
+console.dir(Math.min(...locationNumbers), { depth: null });
