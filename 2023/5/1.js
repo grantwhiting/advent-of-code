@@ -26,64 +26,53 @@ const almanacGroups = almanac.reduce((obj, item) => {
   return { ...obj, ...{ [key]: ranges } };
 }, {});
 
-Object.entries(almanacGroups).forEach(([key, value], i) => {
-  value.forEach((r, j) => {
-    const map = new Map();
-    const sourceList = createList(r.sourceStart, r.range);
-    const destinationList = createList(r.destinationStart, r.range);
+const almanacGroupNames = [
+  "seed-to-soil map:",
+  "soil-to-fertilizer map:",
+  "fertilizer-to-water map:",
+  "water-to-light map:",
+  "light-to-temperature map:",
+  "temperature-to-humidity map:",
+  "humidity-to-location map:",
+];
 
-    sourceList.forEach((sl, k) => {
-      map.set(sl, destinationList[k]);
-    });
+const almanacGroupsMap = new Map();
 
-    almanacGroups[key][`map${j + 1}`] = map;
-  });
+almanacGroupNames.forEach((name) => {
+  almanacGroupsMap.set(name, almanacGroups[name]);
 });
 
-const rangeResults = seeds.reduce((acc, curr) => {
-  return { ...acc, ...{ [curr]: [] } };
-}, {});
+const locations = [];
 
-seeds.forEach((s, i) => {
-  const almanacGroupsCopy = { ...almanacGroups };
-  Object.entries(almanacGroupsCopy).forEach(([key, value]) => {
-    const maps = Object.keys(value)
-      .filter((key) => /^map/.test(key))
-      .map((x) => value[x]);
+for (let seedsIdx = 0; seedsIdx < seeds.length; seedsIdx++) {
+  const almanacGroupsMapCopy = new Map(almanacGroupsMap);
+  const s = seeds[seedsIdx];
+  let result;
 
-    delete almanacGroupsCopy[key];
+  for (let [currentGroupName, maps] of almanacGroupsMapCopy) {
+    almanacGroupsMapCopy.delete(currentGroupName);
 
-    let result;
+    for (let mapsIdx = 0; mapsIdx < maps.length; mapsIdx++) {
+      const { sourceStart, destinationStart, range } = maps[mapsIdx];
+      const numberToCheck = result || s;
 
-    if (rangeResults[s].length) {
-      result = rangeResults[s][rangeResults[s].length - 1];
-    }
-
-    for (let y = 0; y < maps.length; y++) {
-      const shouldContinue = getValueFromMap(maps[y], result || s, s);
-      if (shouldContinue) {
-        continue;
+      // if in range - add to the locations array
+      if (
+        numberToCheck >= sourceStart &&
+        numberToCheck <= sourceStart + range
+      ) {
+        // find the matching number in destinationSource
+        const position = numberToCheck - sourceStart;
+        const destinationMatch = destinationStart + position;
+        result = destinationMatch;
+        break;
       }
-      break;
     }
-  });
-});
 
-function createList(startingNumber, n) {
-  return Array(n)
-    .fill()
-    .map((_, index) => startingNumber + index);
-}
-
-function getValueFromMap(map, number, seed) {
-  if (map.get(number)) {
-    rangeResults[seed].push(map.get(number));
-    return false;
+    if (almanacGroupsMapCopy.size === 0) {
+      locations.push(result);
+    }
   }
-
-  return true;
 }
 
-const locationNumbers = Object.values(rangeResults).map((x) => x.pop());
-
-console.dir(Math.min(...locationNumbers), { depth: null });
+console.log(Math.min(...locations));
