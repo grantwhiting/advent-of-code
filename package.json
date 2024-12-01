@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/grantwhiting/advent-of-code/issues"
   },
-  "homepage": "https://github.com/grantwhiting/advent-of-code#readme"
+  "homepage": "https://github.com/grantwhiting/advent-of-code#readme",
+  "devDependencies": {
+    "clipboardy": "^4.0.0",
+    "csv-parser": "^3.0.0"
+  }
 }
