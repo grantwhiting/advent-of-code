@@ -1,13 +1,15 @@
 const fs = require("fs");
-const unsafeReports = [];
 const data = fs
   .readFileSync("./data.txt", "utf-8")
   .split(/\n/)
-  .map((d) => d.split(/\s/).map(Number));
+  .map((d) => ({
+    input: d.split(/\s/).map(Number),
+    isSafe: true,
+  }));
 
-data.forEach(checkSafety);
+data.forEach((d, idx) => checkSafety(d.input, idx));
 
-function checkSafety(inputArr) {
+function checkSafety(inputArr, idx) {
   for (let i = 0; i < inputArr.length; i++) {
     const currInput = inputArr[i];
     const nextInput = inputArr[i + 1];
@@ -26,10 +28,10 @@ function checkSafety(inputArr) {
       inputDiffTooLarge ||
       inputDidNotChange
     ) {
-      unsafeReports.push(1);
+      data[idx].isSafe = false;
       break;
     }
   }
 }
 
-console.log(data.length - unsafeReports.length);
+console.log(data.filter((d) => d.isSafe).length);
